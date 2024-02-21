@@ -1,0 +1,88 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: arial, sans-serif;
+}
+
+header {
+    max-width: 650px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: .5rem;
+}
+
+h2 {
+    margin: .5rem;
+}
+
+#game {
+    display: flex;
+    flex-direction: column;
+}
+
+#game .loader {
+    display: none;
+    margin: .5rem auto;
+}
+
+#game.loading .loader {
+    display: block;
+}
+
+#game.loading #board {
+    display: none;
+}
+
+#done {
+    width: 100%;
+    max-width: 300px;
+    padding: .5rem;
+    background: lightgray;
+    margin: .5rem auto;
+}
+
+h3, p {
+    margin: .5rem 0;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 3rem);
+    gap: .5rem;
+    margin: 1rem auto;
+}
+
+.tile {
+    height: 3rem;
+    background: lightgray;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 2px;
+}
+
+.score-15 { background: #cb0b0b; color: white; }
+.score-12 { background: #ff2c2c;  color: white; }
+.score-10 { background: #ff5f23;  color: white; }
+.score-9 { background: #dc7400;  color: white; }
+.score-8 { background: #ff9a00;  color: white; }
+.score-7 { background: #ffbd22; }
+.score-6 { background: #ffd500; }
+.score-5 { background: #ffe59b; }
+.score-4 { background: #fff6bd; }
+.score-3 { background: #cff6e3; }
+.score-2 { background: #c5e8ff; }
+.score-1 { background: #87a9bb; }
+.score-0 { background: #5d6d8d;  color: white; }
+
+.invalid { background: white; border: 1px solid #cb0b0b}
+
+.indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}
