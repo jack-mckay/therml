@@ -43,7 +43,8 @@ const reset = () => {
 	letters.forEach(letter => {
 		letter.className = "tile";
 		letter.innerHTML = "";
-	})
+	});
+	score = 0;
 	done = false;
 	definitionElem.style.display = "none";
 	definitionElem.querySelector(".word").innerText = "";
@@ -79,10 +80,11 @@ const markInvalid = () => {
 const handleWin = async (win) => {
 	if (win) {
 		for (let i = 0; i < WORD_LENGTH; i++) {
-			letters[currentRow * WORD_LENGTH + i].classList.add("score-15")
+			letters[currentRow * WORD_LENGTH + i].classList.add("winner");
 		}
 	}
 	definitionElem.style.display = "inline-block";
+	score = 50;
 	done = true;
 }
 
@@ -141,7 +143,7 @@ const commit = async () => {
 					//CORRECT
 					//remove instance of word from map
 					wordMap[guess[i]]--;
-					score = score + 3;
+					score = score + 10;
 
 				} else if (wordMap[guess[i]] && wordMap[guess[i]] > 0) {
 					//ALMOST

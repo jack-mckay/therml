@@ -41,9 +41,10 @@ h2 {
 #done {
     width: 100%;
     max-width: 300px;
-    padding: .5rem;
-    background: lightgray;
+    padding: 1rem;
+    background: #eee;
     margin: .5rem auto;
+    border-radius: 2px;
 }
 
 h3, p {
@@ -59,27 +60,73 @@ h3, p {
 
 .tile {
     height: 3rem;
-    background: lightgray;
+    border: 1px solid #ccc;
     padding: 1rem;
     text-align: center;
     border-radius: 2px;
 }
 
-.score-15 { background: #cb0b0b; color: white; }
-.score-12 { background: #ff2c2c;  color: white; }
-.score-10 { background: #ff5f23;  color: white; }
-.score-9 { background: #dc7400;  color: white; }
-.score-8 { background: #ff9a00;  color: white; }
-.score-7 { background: #ffbd22; }
-.score-6 { background: #ffd500; }
-.score-5 { background: #ffe59b; }
-.score-4 { background: #fff6bd; }
+/*
+0 0 0 0 0 = 0
+0 0 0 0 1 = 1
+0 0 0 1 1 = 2
+0 0 1 1 1 = 3
+0 1 1 1 1 = 4
+1 1 1 1 1 = 5
+10 0 0 0 0 = 10
+10 0 0 0 1 = 11
+10 0 0 1 1 = 12
+10 0 1 1 1 = 13
+10 1 1 1 1 = 14
+10 10 0 0 0 = 20
+10 10 0 0 1 = 21
+10 10 0 1 1 = 22
+10 10 1 1 1 = 23
+10 10 10 0 0 = 30
+10 10 10 0 1 = 31
+10 10 10 1 1 = 32
+10 10 10 10 0 = 40
+*/
+.score-41 { background: #670000; color: white; }
+.score-40 { background: #940000; color: white; }
+.score-32 { background: #c40000; color: white; }
+.score-31 { background: #d90808; color: white; }
+.score-30 { background: #ff2525;  color: white; }
+.score-23 { background: #ff5312;  color: white; }
+.score-21 { background: #ff6a31;  color: white; }
+.score-20 { background: #dc7400;  color: white; }
+.score-14 { background: #ff9a00;  color: white; }
+.score-13 { background: #ffbd22; }
+.score-12 { background: #ffd500; }
+.score-11 { background: #ffe59b; }
+.score-10 { background: #fff6bd; }
+.score-5 { background: rgba(237, 255, 150, 0.82); }
+.score-4 { background: #dcffc1; }
 .score-3 { background: #cff6e3; }
 .score-2 { background: #c5e8ff; }
-.score-1 { background: #87a9bb; }
-.score-0 { background: #5d6d8d;  color: white; }
+.score-1 { background: #d7e5ec;}
+.score-0 { background: #ddd;}
 
-.invalid { background: white; border: 1px solid #cb0b0b}
+@keyframes winner {
+    0% {
+        background-color: #670000;
+    }
+    50% {
+        background-color: #ff2525;
+    }
+    100% {
+        background-color: #670000;
+    }
+}
+
+.winner {
+    color: white;
+    animation: winner 2s infinite;
+    animation-timing-function: linear;
+}
+
+
+.invalid { border: 1px solid #cb0b0b}
 
 .indicator {
     display: inline-block;
