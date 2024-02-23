@@ -2,11 +2,9 @@ const ALLOWED_GUESSES = 12;
 const WORD_LENGTH = 5;
 const boardElem = document.getElementById("board");
 const definitionElem = document.getElementById("done");
-let letters;
+let letters, rows, word, wordArr;
 let done = false;
 let loading = true;
-let word = null;
-let wordArr = null;
 let currentGuess = "";
 let currentRow = 0;
 
@@ -29,22 +27,34 @@ const makeMap = array => {
 const isLetter = letter => /^[a-zA-Z]$/.test(letter);
 
 const drawGrid = () => {
-	for (let i = 0; i < (WORD_LENGTH * ALLOWED_GUESSES); i++) {
-		const tile = document.createElement("div");
-		tile.classList.add("tile");
-		boardElem.appendChild(tile);
+	boardElem.innerHTML = "";
+
+	for (let i = 0; i < (ALLOWED_GUESSES); i++) {
+		const row = document.createElement("div");
+		row.classList.add("row");
+		boardElem.appendChild(row);
+
+		for (let i = 0; i < WORD_LENGTH; i++) {
+			const tile = document.createElement("div");
+			tile.classList.add("tile");
+			row.appendChild(tile);
+		}
+
+		const hint = document.createElement("div");
+		hint.classList.add("hint");
+		row.appendChild(hint);
 	}
-	letters = document.querySelectorAll(".tile")
+	letters = document.querySelectorAll(".tile");
+	rows = document.querySelectorAll(".row");
 };
 
 const reset = () => {
 	currentGuess = "";
-	currentRow = "";
+	currentRow = 0;
 	letters.forEach(letter => {
 		letter.className = "tile";
 		letter.innerHTML = "";
 	});
-	score = 0;
 	done = false;
 	definitionElem.style.display = "none";
 	definitionElem.querySelector(".word").innerText = "";
@@ -82,9 +92,11 @@ const handleWin = async (win) => {
 		for (let i = 0; i < WORD_LENGTH; i++) {
 			letters[currentRow * WORD_LENGTH + i].classList.add("winner");
 		}
+		rows[currentRow].querySelector(".hint").innerText = "🔥";
+	} else {
+		rows[currentRow].querySelector(".hint").innerText = "😞";
 	}
 	definitionElem.style.display = "inline-block";
-	score = 50;
 	done = true;
 }
 
@@ -109,8 +121,7 @@ handleScore = async (score) => {
 	for (let i = 0; i < WORD_LENGTH; i++) {
 		letters[currentRow * WORD_LENGTH + i].classList.add(`score-${score}`)
 	}
-
-	document.getElementById("score").innerText = score;
+	rows[currentRow].querySelector(".hint").innerText = score + " points";
 }
 
 const commit = async () => {
@@ -165,6 +176,7 @@ const commit = async () => {
 }
 
 const init = async () => {
+	await drawGrid();
 	await reset();
 
 	const res = await fetch("https://words.dev-apis.com/word-of-the-day?random=1");
@@ -189,5 +201,4 @@ const init = async () => {
 	}
 }
 
-drawGrid();
 init();

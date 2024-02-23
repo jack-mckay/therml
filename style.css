@@ -52,13 +52,21 @@ h3, p {
 }
 
 #board {
-    display: grid;
-    grid-template-columns: repeat(5, 3rem);
-    gap: .5rem;
     margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    position: relative;
 }
 
 .tile {
+    width: 3rem;
     height: 3rem;
     border: 1px solid #ccc;
     padding: 1rem;
@@ -87,44 +95,45 @@ h3, p {
 10 10 10 1 1 = 32
 10 10 10 10 0 = 40
 */
-.score-41 { background: #670000; color: white; }
-.score-40 { background: #940000; color: white; }
-.score-32 { background: #c40000; color: white; }
-.score-31 { background: #d90808; color: white; }
-.score-30 { background: #ff2525;  color: white; }
-.score-23 { background: #ff5312;  color: white; }
-.score-21 { background: #ff6a31;  color: white; }
-.score-20 { background: #dc7400;  color: white; }
-.score-14 { background: #ff9a00;  color: white; }
-.score-13 { background: #ffbd22; }
-.score-12 { background: #ffd500; }
-.score-11 { background: #ffe59b; }
-.score-10 { background: #fff6bd; }
-.score-5 { background: rgba(237, 255, 150, 0.82); }
-.score-4 { background: #dcffc1; }
-.score-3 { background: #cff6e3; }
-.score-2 { background: #c5e8ff; }
-.score-1 { background: #d7e5ec;}
+.score-41 { background: #940000; color: white; }
+.score-40 { background: #c40000; color: white; }
+.score-32 { background: #d90808; color: white; }
+.score-31 { background: #ff1616;  color: white; }
+.score-30 { background: #ff6447;  color: white; }
+.score-23 { background: #ff500f;  color: white; }
+.score-22 { background: #fc6e24;  color: white; }
+.score-21 { background: #ff8400; }
+.score-20 { background: #ffa317; }
+.score-14 { background: #ffd533; }
+.score-13 { background: #ffe859; }
+.score-12 { background: #fff6b6; }
+.score-11 { background: #f3ffbd; }
+.score-10 { background: #BCFF98D1 }
+.score-5 { background: #c1ffc6; }
+.score-4 { background: #c4e9ff; }
+.score-3 { background: #d3e1ff; }
+.score-2 { background: #e9e3ff;}
+.score-1 { background: #ece5f5;}
 .score-0 { background: #ddd;}
-
-@keyframes winner {
-    0% {
-        background-color: #670000;
-    }
-    50% {
-        background-color: #ff2525;
-    }
-    100% {
-        background-color: #670000;
-    }
-}
 
 .winner {
     color: white;
-    animation: winner 2s infinite;
-    animation-timing-function: linear;
+    background: #3d0215;
 }
 
+.winner + .hint {
+    font-size: 2rem;
+}
+
+.hint {
+    position: absolute;
+    left: 100%;
+    margin: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+    font-size: .8rem;
+    line-height: 1rem;
+}
 
 .invalid { border: 1px solid #cb0b0b}
 
