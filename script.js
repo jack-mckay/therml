@@ -1,4 +1,4 @@
-const ALLOWED_GUESSES = 12;
+const ALLOWED_GUESSES = 10;
 const WORD_LENGTH = 5;
 const boardElem = document.getElementById("board");
 const definitionElem = document.getElementById("done");
@@ -106,7 +106,7 @@ const handleKeyPress = (e) => {
 	}
 	const action = e.key;
 	if (e.repeat) {
-		return
+		return;
 	}
 	if (isLetter(action)) {
 		addLetter(action.toUpperCase());
@@ -117,7 +117,7 @@ const handleKeyPress = (e) => {
 	}
 }
 
-handleScore = async (score) => {
+const handleScore = async (score) => {
 	for (let i = 0; i < WORD_LENGTH; i++) {
 		letters[currentRow * WORD_LENGTH + i].classList.add(`score-${score}`)
 	}
@@ -133,13 +133,9 @@ const commit = async () => {
 		});
 		const {validWord} = await res.json();
 		if (!validWord) {
-
-			// console.log(`Invalid word: ${currentGuess}`);
 			markInvalid();
 
 		} else if (!!currentGuess) {
-			// console.log(`Valid word: ${currentGuess}`);
-
 			const guess = currentGuess.split("");
 			const wordMap = makeMap(wordArr);
 
@@ -176,8 +172,8 @@ const commit = async () => {
 }
 
 const init = async () => {
-	await drawGrid();
-	await reset();
+	drawGrid();
+	reset();
 
 	const res = await fetch("https://words.dev-apis.com/word-of-the-day?random=1");
 	const {word: wordRes} = await res.json();
@@ -188,16 +184,14 @@ const init = async () => {
 	const definition = await def.json();
 	if (!!definition) {
 		const firstDef = definition[0];
-		// console.log(firstDef);
 		definitionElem.querySelector(".word").innerText = firstDef.word.toUpperCase();
 		definitionElem.querySelector(".phonetic").innerText = !!firstDef.phonetic ? firstDef.phonetic : "";
 		definitionElem.querySelector(".definition").innerText = firstDef.meanings[0].definitions[0].definition;
 	}
 
 	if (!!word) {
-		console.log(word)
 		document.getElementById("game").classList.remove("loading");
-		document.addEventListener("keydown", handleKeyPress)
+		document.addEventListener("keydown", handleKeyPress);
 	}
 }
 
