@@ -77,7 +77,7 @@ const deleteLetter = () => {
 
 const resetInvalid = () => {
 	letters.forEach(letter => {
-		letter.classList.remove("invalid")
+		letter.classList.remove("invalid");
 	})
 }
 
@@ -194,5 +194,7 @@ const init = async () => {
 		document.addEventListener("keydown", handleKeyPress);
 	}
 }
+
+document.getElementById('reset').onclick = () => {init()};
 
 init();
