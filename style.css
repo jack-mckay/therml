@@ -120,7 +120,7 @@ h3, p {
 
 .keyboard {
     background: #ddd;
-    padding: 1rem;
+    padding: .5rem;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -135,6 +135,16 @@ h3, p {
 
 .keyboard button {
     margin: .125rem;
-    font-size: 1.25rem;
-    padding: .5rem;
+    font-size: 1rem;
+    padding: .25rem;
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid #ccc;
+    text-align: center;
+    border-radius: 2px;
+    background: #eee;
+}
+
+.keyboard button[data-key="enter"] {
+    width: 3.5rem;
 }
