@@ -2,6 +2,7 @@ const ALLOWED_GUESSES = 10;
 const WORD_LENGTH = 5;
 const boardElem = document.getElementById("board");
 const definitionElem = document.getElementById("done");
+const keys = document.querySelectorAll(".keyboard-button");
 let letters, rows, word, wordArr;
 let done = false;
 let loading = true;
@@ -85,6 +86,7 @@ const markInvalid = () => {
 	for (let i = 0; i < WORD_LENGTH; i++) {
 		letters[currentRow * WORD_LENGTH + i].classList.add("invalid")
 	}
+	
 }
 
 const handleWin = async (win) => {
@@ -110,9 +112,22 @@ const handleKeyPress = (e) => {
 	}
 	if (isLetter(action)) {
 		addLetter(action.toUpperCase());
-	} else if (action === "Backspace") {
+	} else if (["Backspace","Delete",8,46].includes(action)) {
 		deleteLetter();
 	} else if (action === "Enter") {
+		commit();
+	}
+}
+
+const handleKeyboardClick = (key) => {
+	if (done) {
+		return;
+	}
+	if (isLetter(key)) {
+		addLetter(key.toUpperCase());
+	} else if (key === "backspace") {
+		deleteLetter();
+	} else if (key === "enter") {
 		commit();
 	}
 }
@@ -194,6 +209,12 @@ const init = async () => {
 		document.addEventListener("keydown", handleKeyPress);
 	}
 }
+
+keys.forEach(element => {
+	element.addEventListener("click", (e) => {
+		handleKeyboardClick(e.target.dataset.key);
+    });
+});
 
 document.getElementById('reset').onclick = () => {init()};
 

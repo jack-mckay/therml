@@ -1,33 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>therml</title>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div id="game" class="loading">
-	<header>
-		<h1>therml 🔥</h1>
-		<p>Try to guess the word in as few turns as possible. The score and colour of the letters in each row will indicate how "warm" you are.</p>
-		<p><strong>10 points</strong> for every correct letter in the right place<br>
-			<strong>1 point</strong> for every correct letter in the wrong place</p>
-	</header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>therml</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div id="game" class="loading">
+			<header>
+				<h1>therml 🔥</h1>
+				<p>
+					Try to guess the word in as few turns as possible. The score and
+					colour of the letters in each row will indicate how "warm" you are.
+				</p>
+				<p>
+					<strong>10 points</strong> for every correct letter in the right
+					place<br />
+					<strong>1 point</strong> for every correct letter in the wrong place
+				</p>
+			</header>
 
-	<div id="done">
-		<h3 class="word"></h3>
-		<em class="phonetic"></em>
-		<p class="definition"></p>
-		<button id="reset">New game</button>
-	</div>
+			<div id="done">
+				<h3 class="word"></h3>
+				<em class="phonetic"></em>
+				<p class="definition"></p>
+				<button type="button" id="reset">New game</button>
+			</div>
 
-	<div class="loader">Loading...</div>
+			<div class="loader">Loading...</div>
 
-	<div id="board">
-	</div>
-</div>
+			<div id="board"></div>
 
+		</div>
 
-</body>
-<script src="script.js" type="text/javascript"></script>
+		<div class="keyboard" role="group" aria-label="Keyboard">
+			<div class="keyboard-row">
+				<button type="button" class="keyboard-button" data-key="q" aria-label="add q">q</button>
+				<button type="button" class="keyboard-button" data-key="w" aria-label="add w">w</button>
+				<button type="button" class="keyboard-button" data-key="e" aria-label="add e">e</button>
+				<button type="button" class="keyboard-button" data-key="r" aria-label="add r">r</button>
+				<button type="button" class="keyboard-button" data-key="t" aria-label="add t">t</button>
+				<button type="button" class="keyboard-button" data-key="y" aria-label="add y">y</button>
+				<button type="button" class="keyboard-button" data-key="u" aria-label="add u">u</button>
+				<button type="button" class="keyboard-button" data-key="i" aria-label="add i">i</button>
+				<button type="button" class="keyboard-button" data-key="o" aria-label="add o">o</button>
+				<button type="button" class="keyboard-button" data-key="p" aria-label="add p">p</button>
+			</div>
+			<div class="keyboard-row">
+				<button type="button" class="keyboard-button" data-key="a" aria-label="add a">a</button>
+				<button type="button" class="keyboard-button" data-key="s" aria-label="add s">s</button>
+				<button type="button" class="keyboard-button" data-key="d" aria-label="add d">d</button>
+				<button type="button" class="keyboard-button" data-key="f" aria-label="add f">f</button>
+				<button type="button" class="keyboard-button" data-key="g" aria-label="add g">g</button>
+				<button type="button" class="keyboard-button" data-key="h" aria-label="add h">h</button>
+				<button type="button" class="keyboard-button" data-key="j" aria-label="add j">j</button>
+				<button type="button" class="keyboard-button" data-key="k" aria-label="add k">k</button>
+				<button type="button" class="keyboard-button" data-key="l" aria-label="add l">l</button>
+			</div>
+			<div class="keyboard-row">
+				<button type="button" class="keyboard-button" data-key="enter" aria-label="enter">enter</button>
+				<button type="button" class="keyboard-button" data-key="z" aria-label="add z">z</button>
+				<button type="button" class="keyboard-button" data-key="x" aria-label="add x">x</button>
+				<button type="button" class="keyboard-button" data-key="c" aria-label="add c">c</button>
+				<button type="button" class="keyboard-button" data-key="v" aria-label="add v">v</button>
+				<button type="button" class="keyboard-button" data-key="b" aria-label="add b">b</button>
+				<button type="button" class="keyboard-button" data-key="n" aria-label="add n">n</button>
+				<button type="button" class="keyboard-button" data-key="m" aria-label="add m">m</button>
+				<button type="button" class="keyboard-button" data-key="backspace" aria-label="backspace">
+					<svg
+						aria-hidden="true"
+						xmlns="http://www.w3.org/2000/svg"
+						height="20"
+						viewBox="0 0 24 24"
+						width="20"
+						class="game-icon"
+						data-testid="icon-backspace"
+					>
+						<path
+							fill="var(--color-tone-1)"
+							d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"
+						></path>
+					</svg>
+				</button>
+			</div>
+		</div>
+		
+	</body>
+	<script src="script.js" type="text/javascript"></script>
 </html>

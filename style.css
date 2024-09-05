@@ -4,10 +4,11 @@
 
 body {
     font-family: arial, sans-serif;
+    margin: 0;
 }
 
 header {
-    max-width: 650px;
+    max-width: 40rem;
     margin: auto;
     text-align: center;
 }
@@ -23,6 +24,7 @@ h2 {
 #game {
     display: flex;
     flex-direction: column;
+    padding: .5rem;
 }
 
 #game .loader {
@@ -40,7 +42,7 @@ h2 {
 
 #done {
     width: 100%;
-    max-width: 300px;
+    max-width: 18rem;
     padding: 1rem;
     background: #eee;
     margin: .5rem auto;
@@ -52,7 +54,7 @@ h3, p {
 }
 
 #board {
-    margin: 1rem auto;
+    margin: 1rem auto 12rem;
     display: flex;
     flex-direction: column;
     gap: .5rem;
@@ -116,8 +118,23 @@ h3, p {
 
 .invalid { border: 1px solid #cb0b0b; }
 
-.indicator {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
+.keyboard {
+    background: #ddd;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.keyboard-row {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.keyboard button {
+    margin: .125rem;
+    font-size: 1.25rem;
+    padding: .5rem;
 }
