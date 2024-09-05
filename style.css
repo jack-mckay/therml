@@ -1,153 +1,207 @@
-*, *:before, *:after {
-    box-sizing: border-box;
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
 }
 
 body {
-    font-family: arial, sans-serif;
-    margin: 0;
+	font-family: arial, sans-serif;
+	margin: 0;
 }
 
 header {
-    max-width: 40rem;
-    margin: auto;
-    text-align: center;
+	max-width: 40rem;
+	margin: auto;
+	text-align: center;
 }
 
 h1 {
-    margin-bottom: .5rem;
+	margin-bottom: 0.5rem;
 }
 
 h2 {
-    margin: .5rem;
+	margin: 0.5rem;
 }
 
 #game {
-    display: flex;
-    flex-direction: column;
-    padding: .5rem;
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem;
 }
 
 #game .loader {
-    display: none;
-    margin: .5rem auto;
+	display: none;
+	margin: 0.5rem auto;
 }
 
 #game.loading .loader {
-    display: block;
+	display: block;
 }
 
 #game.loading #board {
-    display: none;
+	display: none;
 }
 
 #done {
-    width: 100%;
-    max-width: 18rem;
-    padding: 1rem;
-    background: #eee;
-    margin: .5rem auto;
-    border-radius: 2px;
+	width: 100%;
+	max-width: 18rem;
+	padding: 1rem;
+	background: #eee;
+	margin: 0.5rem auto;
+	border-radius: 2px;
 }
 
-h3, p {
-    margin: .5rem 0;
+h3,
+p {
+	margin: 0.5rem 0;
 }
 
 #board {
-    margin: 1rem auto 12rem;
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
+	margin: 1rem auto 12rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 
 .row {
-    display: flex;
-    justify-content: space-between;
-    gap: .5rem;
-    position: relative;
+	display: flex;
+	justify-content: space-between;
+	gap: 0.5rem;
+	position: relative;
 }
 
 .tile {
-    width: 3rem;
-    height: 3rem;
-    border: 1px solid #ccc;
-    padding: 1rem;
-    text-align: center;
-    border-radius: 2px;
+	width: 3rem;
+	height: 3rem;
+	border: 1px solid #ccc;
+	padding: 1rem;
+	text-align: center;
+	border-radius: 2px;
 }
 
-.score-41 { background: #940000; color: white; }
-.score-40 { background: #c40000; color: white; }
-.score-32 { background: #d90808; color: white; }
-.score-31 { background: #ff3333;  color: white; }
-.score-30 { background: #ff6447;  color: white; }
-.score-23 { background: #ff500f;  color: white; }
-.score-22 { background: #fc6e24;  color: white; }
-.score-21 { background: #ff8400; }
-.score-20 { background: #ffa317; }
-.score-14 { background: #ffd533; }
-.score-13 { background: #ffe859; }
-.score-12 { background: #fff6b6; }
-.score-11 { background: #f3ffbd; }
-.score-10 { background: #bcff98d1; }
-.score-5 { background: #c1ffc6; }
-.score-4 { background: #c4e9ff; }
-.score-3 { background: #d3e1ff; }
-.score-2 { background: #e9e3ff; }
-.score-1 { background: #fbe4ff; }
-.score-0 { background: #ddd; }
+.score-41 {
+	background: #940000;
+	color: white;
+}
+.score-40 {
+	background: #c40000;
+	color: white;
+}
+.score-32 {
+	background: #d90808;
+	color: white;
+}
+.score-31 {
+	background: #ff3333;
+	color: white;
+}
+.score-30 {
+	background: #ff6447;
+	color: white;
+}
+.score-23 {
+	background: #ff500f;
+	color: white;
+}
+.score-22 {
+	background: #fc6e24;
+	color: white;
+}
+.score-21 {
+	background: #ff8400;
+}
+.score-20 {
+	background: #ffa317;
+}
+.score-14 {
+	background: #ffd533;
+}
+.score-13 {
+	background: #ffe859;
+}
+.score-12 {
+	background: #fff6b6;
+}
+.score-11 {
+	background: #f3ffbd;
+}
+.score-10 {
+	background: #bcff98d1;
+}
+.score-5 {
+	background: #c1ffc6;
+}
+.score-4 {
+	background: #c4e9ff;
+}
+.score-3 {
+	background: #d3e1ff;
+}
+.score-2 {
+	background: #e9e3ff;
+}
+.score-1 {
+	background: #fbe4ff;
+}
+.score-0 {
+	background: #ddd;
+}
 
 .winner {
-    color: white;
-    background: #3d0215;
+	color: white;
+	background: #3d0215;
 }
 
 .winner + .hint {
-    font-size: 2rem;
+	font-size: 2rem;
 }
 
 .hint {
-    position: absolute;
-    left: 100%;
-    margin: 1rem;
-    font-weight: bold;
-    white-space: nowrap;
-    font-size: .8rem;
-    line-height: 1rem;
+	position: absolute;
+	left: 100%;
+	margin: 1rem;
+	font-weight: bold;
+	white-space: nowrap;
+	font-size: 0.8rem;
+	line-height: 1rem;
 }
 
-.invalid { border: 1px solid #cb0b0b; }
+.invalid {
+	border: 1px solid #cb0b0b;
+}
 
 .keyboard {
-    background: #ddd;
-    padding: .5rem;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+	background: #ddd;
+	padding: 0.5rem;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 }
 
 .keyboard-row {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    justify-content: center;
+	display: flex;
+	flex-wrap: nowrap;
+	width: 100%;
+	justify-content: center;
 }
 
 .keyboard button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: .125rem;
-    font-size: 1rem;
-    padding: .25rem;
-    height: 2rem;
-    width: 2rem;
-    border: 1px solid #bbb;
-    text-align: center;
-    border-radius: 2px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
     background: #eee;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+	color: #000;
+    font-size: 1rem;
+    height: 2rem;
+	margin: 0.125rem;	
+	padding: 0.25rem;
+	width: 2rem;
+	text-align: center;
+    touch-action: manipulation;
 }
 
 .keyboard button[data-key="enter"] {
-    width: 3.5rem;
+	width: 3.5rem;
 }
