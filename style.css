@@ -194,14 +194,33 @@ p {
     border-radius: 2px;
 	color: #000;
     font-size: 1rem;
-    height: 2rem;
+    height: 3rem;
 	margin: 0.125rem;	
 	padding: 0.25rem;
-	width: 2rem;
+	width: 2.5rem;
 	text-align: center;
     touch-action: manipulation;
+    user-select: none;
 }
 
 .keyboard button[data-key="enter"] {
 	width: 3.5rem;
+}
+
+.keyboard button > * {
+    pointer-events: none;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+@media screen and (max-width: 480px) {
+    .hint {
+        margin-inline: .5rem;
+    }
+    .tile {
+        width: 2.5rem;
+    }
+    p {
+        font-size: .8rem;
+    }
 }

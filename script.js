@@ -71,7 +71,6 @@ const addLetter = (letter) => {
 }
 
 const deleteLetter = () => {
-	resetInvalid();
 	currentGuess = currentGuess.length <= 1 ? "" : currentGuess.slice(0, -1);
 	letters[currentRow * WORD_LENGTH + currentGuess.length].innerText = "";
 }
@@ -86,7 +85,6 @@ const markInvalid = () => {
 	for (let i = 0; i < WORD_LENGTH; i++) {
 		letters[currentRow * WORD_LENGTH + i].classList.add("invalid")
 	}
-	
 }
 
 const handleWin = async (win) => {
@@ -103,16 +101,17 @@ const handleWin = async (win) => {
 }
 
 const handleKeyPress = (e) => {
+	const action = e.key;
 	if (done) {
 		return;
 	}
-	const action = e.key;
 	if (e.repeat) {
 		return;
 	}
 	if (isLetter(action)) {
 		addLetter(action.toUpperCase());
 	} else if (["Backspace","Delete",8,46].includes(action)) {
+		resetInvalid();
 		deleteLetter();
 	} else if (action === "Enter") {
 		commit();
@@ -126,6 +125,7 @@ const handleKeyboardClick = (key) => {
 	if (isLetter(key)) {
 		addLetter(key.toUpperCase());
 	} else if (key === "backspace") {
+		resetInvalid();
 		deleteLetter();
 	} else if (key === "enter") {
 		commit();
@@ -191,17 +191,17 @@ const init = async () => {
 	reset();
 
 	const res = await fetch("https://words.dev-apis.com/word-of-the-day?random=1");
-	const {word: wordRes} = await res.json();
+	const {word: wordRes} = await res?.json();
 	word = wordRes.toUpperCase();
 	wordArr = word.split("");
 
 	const def = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-	const definition = await def.json();
+	const definition = await def?.json();
 	if (!!definition) {
 		const firstDef = definition[0];
-		definitionElem.querySelector(".word").innerText = firstDef.word.toUpperCase();
-		definitionElem.querySelector(".phonetic").innerText = !!firstDef.phonetic ? firstDef.phonetic : "";
-		definitionElem.querySelector(".definition").innerText = firstDef.meanings[0].definitions[0].definition;
+		definitionElem.querySelector(".word").innerText = firstDef?.word.toUpperCase();
+		definitionElem.querySelector(".phonetic").innerText = !!firstDef?.phonetic ? firstDef.phonetic : "";
+		definitionElem.querySelector(".definition").innerText = firstDef?.meanings[0].definitions[0].definition;
 	}
 
 	if (!!word) {
