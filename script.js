@@ -3,17 +3,19 @@ const WORD_LENGTH = 5;
 const boardElem = document.getElementById("board");
 const definitionElem = document.getElementById("done");
 const keys = document.querySelectorAll(".keyboard-button");
+const markingButtons = document.querySelectorAll('input[name="marking"]');
 let letters, rows, word, wordArr;
 let done = false;
 let loading = true;
 let currentGuess = "";
 let currentRow = 0;
+let marking = "none";
 
 // takes an array of letters (like ['E', 'L', 'I', 'T', 'E']) and creates
 // an object out of it (like {E: 2, L: 1, T: 1}) so we can use that to
 // make sure we get the correct amount of letters marked almost instead
 // of just wrong or correct
-const makeMap = array => {
+const makeMap = (array) => {
 	const obj = {};
 	for (let i = 0; i < array.length; i++) {
 		if (obj[array[i]]) {
@@ -23,14 +25,14 @@ const makeMap = array => {
 		}
 	}
 	return obj;
-}
+};
 
-const isLetter = letter => /^[a-zA-Z]$/.test(letter);
+const isLetter = (letter) => /^[a-zA-Z]$/.test(letter);
 
 const drawGrid = () => {
 	boardElem.innerHTML = "";
 
-	for (let i = 0; i < (ALLOWED_GUESSES); i++) {
+	for (let i = 0; i < ALLOWED_GUESSES; i++) {
 		const row = document.createElement("div");
 		row.classList.add("row");
 		boardElem.appendChild(row);
@@ -52,7 +54,7 @@ const drawGrid = () => {
 const reset = () => {
 	currentGuess = "";
 	currentRow = 0;
-	letters.forEach(letter => {
+	letters.forEach((letter) => {
 		letter.className = "tile";
 		letter.innerHTML = "";
 	});
@@ -61,31 +63,32 @@ const reset = () => {
 	definitionElem.querySelector(".word").innerText = "";
 	definitionElem.querySelector(".phonetic").innerText = "";
 	definitionElem.querySelector(".definition").innerText = "";
-}
+};
 
 const addLetter = (letter) => {
 	if (currentGuess.length < WORD_LENGTH) {
 		currentGuess += letter;
-		letters[currentRow * WORD_LENGTH + currentGuess.length - 1].innerText = letter;
+		letters[currentRow * WORD_LENGTH + currentGuess.length - 1].innerText =
+			letter;
 	}
-}
+};
 
 const deleteLetter = () => {
 	currentGuess = currentGuess.length <= 1 ? "" : currentGuess.slice(0, -1);
 	letters[currentRow * WORD_LENGTH + currentGuess.length].innerText = "";
-}
+};
 
 const resetInvalid = () => {
-	letters.forEach(letter => {
+	letters.forEach((letter) => {
 		letter.classList.remove("invalid");
-	})
-}
+	});
+};
 
 const markInvalid = () => {
 	for (let i = 0; i < WORD_LENGTH; i++) {
-		letters[currentRow * WORD_LENGTH + i].classList.add("invalid")
+		letters[currentRow * WORD_LENGTH + i].classList.add("invalid");
 	}
-}
+};
 
 const handleWin = async (win) => {
 	if (win) {
@@ -98,7 +101,7 @@ const handleWin = async (win) => {
 	}
 	definitionElem.style.display = "inline-block";
 	done = true;
-}
+};
 
 const handleKeyPress = (e) => {
 	const action = e.key;
@@ -110,13 +113,13 @@ const handleKeyPress = (e) => {
 	}
 	if (isLetter(action)) {
 		addLetter(action.toUpperCase());
-	} else if (["Backspace","Delete",8,46].includes(action)) {
+	} else if (["Backspace", "Delete", 8, 46].includes(action)) {
 		resetInvalid();
 		deleteLetter();
 	} else if (action === "Enter") {
 		commit();
 	}
-}
+};
 
 const handleKeyboardClick = (key) => {
 	if (done) {
@@ -130,26 +133,25 @@ const handleKeyboardClick = (key) => {
 	} else if (key === "enter") {
 		commit();
 	}
-}
+};
 
 const handleScore = async (score) => {
 	for (let i = 0; i < WORD_LENGTH; i++) {
-		letters[currentRow * WORD_LENGTH + i].classList.add(`score-${score}`)
+		letters[currentRow * WORD_LENGTH + i].classList.add(`score-${score}`);
 	}
 	rows[currentRow].querySelector(".hint").innerText = score + " points";
-}
+};
 
 const commit = async () => {
 	if (currentGuess.length === WORD_LENGTH) {
 		//VALIDATE WORD
 		const res = await fetch("https://words.dev-apis.com/validate-word", {
 			method: "POST",
-			body: JSON.stringify({word: currentGuess}),
+			body: JSON.stringify({ word: currentGuess }),
 		});
-		const {validWord} = await res.json();
+		const { validWord } = await res.json();
 		if (!validWord) {
 			markInvalid();
-
 		} else if (!!currentGuess) {
 			const guess = currentGuess.split("");
 			const wordMap = makeMap(wordArr);
@@ -166,7 +168,6 @@ const commit = async () => {
 					//remove instance of word from map
 					wordMap[guess[i]]--;
 					score = score + 10;
-
 				} else if (wordMap[guess[i]] && wordMap[guess[i]] > 0) {
 					//ALMOST
 					//remove instance of word from map
@@ -184,38 +185,77 @@ const commit = async () => {
 			}
 		}
 	}
-}
+};
+
+keys.forEach((element) => {
+	element.addEventListener("click", (e) => {
+		handleKeyboardClick(e.target.dataset.key);
+	});
+});
+
+markingButtons.forEach((element) => {
+	element.addEventListener("change", (e) => {
+		marking = e.target.value;
+	});
+});
+
+document.getElementById("reset").onclick = () => {
+	init();
+};
 
 const init = async () => {
 	drawGrid();
 	reset();
 
-	const res = await fetch("https://words.dev-apis.com/word-of-the-day?random=1");
-	const {word: wordRes} = await res?.json();
+	const res = await fetch(
+		"https://words.dev-apis.com/word-of-the-day?random=1"
+	);
+	const { word: wordRes } = await res?.json();
 	word = wordRes.toUpperCase();
 	wordArr = word.split("");
 
-	const def = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+	const def = await fetch(
+		`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+	);
 	const definition = await def?.json();
 	if (!!definition) {
 		const firstDef = definition[0];
-		definitionElem.querySelector(".word").innerText = firstDef?.word.toUpperCase();
-		definitionElem.querySelector(".phonetic").innerText = !!firstDef?.phonetic ? firstDef.phonetic : "";
-		definitionElem.querySelector(".definition").innerText = firstDef?.meanings[0].definitions[0].definition;
+		definitionElem.querySelector(".word").innerText =
+			firstDef?.word.toUpperCase();
+		definitionElem.querySelector(".phonetic").innerText = !!firstDef?.phonetic
+			? firstDef.phonetic
+			: "";
+		definitionElem.querySelector(".definition").innerText =
+			firstDef?.meanings[0].definitions[0].definition;
 	}
 
 	if (!!word) {
 		document.getElementById("game").classList.remove("loading");
 		document.addEventListener("keydown", handleKeyPress);
 	}
-}
 
-keys.forEach(element => {
-	element.addEventListener("click", (e) => {
-		handleKeyboardClick(e.target.dataset.key);
-    });
-});
-
-document.getElementById('reset').onclick = () => {init()};
+	letters.forEach((element) => {
+		element.addEventListener("click", (e) => {
+			if (!!e.target.innerText) {
+				switch (marking) {
+					case "absent":
+						e.target.classList.remove("present", "correct");
+						e.target.classList.toggle("absent");
+						break;
+					case "present":
+						e.target.classList.remove("absent", "correct");
+						e.target.classList.toggle("present");
+						break;
+					case "correct":
+						e.target.classList.remove("present", "absent");
+						e.target.classList.toggle("correct");
+						break;
+					default:
+						e.target.classList.remove("present", "correct", "absent");
+				}
+			}
+		});
+	});
+};
 
 init();
