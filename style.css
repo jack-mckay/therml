@@ -190,6 +190,7 @@ button {
 	background: #59a851;
 }
 .absent {
+	color: black;
 	background: #ddd;
 }
 
