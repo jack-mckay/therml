@@ -99,6 +99,20 @@ const handleWin = async (win) => {
 	} else {
 		rows[currentRow].querySelector(".hint").innerText = "😞";
 	}
+	const def = await fetch(
+		`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+	);
+	const definition = await def?.json();
+	if (!!definition) {
+		const firstDef = definition[0];
+		definitionElem.querySelector(".word").innerText =
+			firstDef?.word.toUpperCase();
+		definitionElem.querySelector(".phonetic").innerText = !!firstDef?.phonetic
+			? firstDef.phonetic
+			: "";
+		definitionElem.querySelector(".definition").innerText =
+			firstDef?.meanings[0].definitions[0].definition;
+	}
 	definitionElem.style.display = "inline-block";
 	done = true;
 };
@@ -187,6 +201,18 @@ const commit = async () => {
 	}
 };
 
+const getWordOfTheDay = () => {
+	const urlParams = new URLSearchParams(window.location.search);
+	if (urlParams.has("free")) {
+		document.getElementById("dailyActions").style.display = "none";
+		return "https://words.dev-apis.com/word-of-the-day?random=1"
+	} else {
+		console.log("playing daily game");
+		document.getElementById("freeActions").style.display = "none";
+		return "https://words.dev-apis.com/word-of-the-day"
+	}
+}
+
 keys.forEach((element) => {
 	element.addEventListener("click", (e) => {
 		handleKeyboardClick(e.target.dataset.key);
@@ -207,27 +233,10 @@ const init = async () => {
 	drawGrid();
 	reset();
 
-	const res = await fetch(
-		"https://words.dev-apis.com/word-of-the-day?random=1"
-	);
+	const res = await fetch(getWordOfTheDay());
 	const { word: wordRes } = await res?.json();
 	word = wordRes.toUpperCase();
 	wordArr = word.split("");
-
-	const def = await fetch(
-		`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-	);
-	const definition = await def?.json();
-	if (!!definition) {
-		const firstDef = definition[0];
-		definitionElem.querySelector(".word").innerText =
-			firstDef?.word.toUpperCase();
-		definitionElem.querySelector(".phonetic").innerText = !!firstDef?.phonetic
-			? firstDef.phonetic
-			: "";
-		definitionElem.querySelector(".definition").innerText =
-			firstDef?.meanings[0].definitions[0].definition;
-	}
 
 	if (!!word) {
 		document.getElementById("game").classList.remove("loading");
@@ -236,7 +245,8 @@ const init = async () => {
 
 	letters.forEach((element) => {
 		element.addEventListener("click", (e) => {
-			if (!!e.target.innerText) {
+			const isLetterComplete = [...e.target.classList].some(className => className.startsWith("score"));
+			if (isLetterComplete) {
 				switch (marking) {
 					case "absent":
 						e.target.classList.remove("present", "correct");
