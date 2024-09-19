@@ -181,24 +181,6 @@ button {
 .score-0 {
 	background: #ddd;
 }
-.present {
-	color: white;
-	background: #d1b437;
-}
-.correct {
-	color: white;
-	background: #59a851;
-}
-.absent {
-	color: black;
-	background: #ddd;
-}
-
-.winner {
-	color: white;
-	background: #3d0215;
-	animation: shake .5s;
-}
 
 .winner + .hint {
 	font-size: 2rem;
@@ -212,10 +194,6 @@ button {
 	white-space: nowrap;
 	font-size: .8rem;
 	line-height: 1rem;
-}
-
-.invalid {
-	border: 1px solid #cb0b0b;
 }
 
 .keyboard {
@@ -233,7 +211,7 @@ button {
 	justify-content: center;
 }
 
-.keyboard button {
+.keyboard-button {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -251,11 +229,11 @@ button {
     user-select: none;
 }
 
-.keyboard button[data-key="enter"] {
+.keyboard-button[data-key="enter"] {
 	width: 3.5rem;
 }
 
-.keyboard button > * {
+.keyboard-button > * {
     pointer-events: none;
     touch-action: manipulation;
     user-select: none;
@@ -312,6 +290,28 @@ legend {
 
 .switch-field label:last-of-type {
 	border-radius: 0 4px 4px 0;
+}
+
+.present {
+	color: white;
+	background: #d1b437;
+}
+.correct {
+	color: white;
+	background: #59a851;
+}
+.absent {
+	color: white;
+	background: #888;
+}
+.invalid {
+	border: 1px solid #cb0b0b;
+}
+
+.winner {
+	color: white;
+	background: #3d0215;
+	animation: shake .5s;
 }
 
 @media screen and (max-width: 480px) {

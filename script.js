@@ -225,10 +225,6 @@ markingButtons.forEach((element) => {
 	});
 });
 
-document.getElementById("reset").onclick = () => {
-	init();
-};
-
 const init = async () => {
 	drawGrid();
 	reset();
@@ -246,21 +242,30 @@ const init = async () => {
 	letters.forEach((element) => {
 		element.addEventListener("click", (e) => {
 			const isLetterComplete = [...e.target.classList].some(className => className.startsWith("score"));
-			if (isLetterComplete) {
+			if (isLetterComplete && !!e.target.innerText) {
+				const letterToMark = e.target.innerText.toLowerCase();
+				const keyBoardLetter = document.querySelectorAll(`.keyboard-button[data-key=${letterToMark}]`)[0];
 				switch (marking) {
 					case "absent":
 						e.target.classList.remove("present", "correct");
 						e.target.classList.toggle("absent");
+						keyBoardLetter.classList.remove("present", "correct");
+						keyBoardLetter.classList.toggle("absent");
 						break;
 					case "present":
 						e.target.classList.remove("absent", "correct");
 						e.target.classList.toggle("present");
+						keyBoardLetter.classList.remove("absent", "correct");
+						keyBoardLetter.classList.toggle("present");
 						break;
 					case "correct":
 						e.target.classList.remove("present", "absent");
 						e.target.classList.toggle("correct");
+						keyBoardLetter.classList.remove("present", "absent");
+						keyBoardLetter.classList.toggle("correct");
 						break;
 					default:
+						keyBoardLetter.classList.remove("present", "correct", "absent");
 						e.target.classList.remove("present", "correct", "absent");
 				}
 			}
