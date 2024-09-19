@@ -81,7 +81,7 @@ button {
 	gap: .5rem;
 }
 
-#reset {
+.button {
 	background-color: #f5f5f5;
 	border: none;
 	color: black;
@@ -94,7 +94,7 @@ button {
 	margin: .5rem 0;
 }
 
-#reset:hover {
+.button:hover {
 	background-color: #bcff98d1;
 }
 
