@@ -70,6 +70,7 @@ const addLetter = (letter) => {
 		currentGuess += letter;
 		letters[currentRow * WORD_LENGTH + currentGuess.length - 1].innerText =
 			letter;
+		letters[currentRow * WORD_LENGTH + currentGuess.length - 1].dataset.tile = letter.toLowerCase();
 	}
 };
 
@@ -225,6 +226,46 @@ markingButtons.forEach((element) => {
 	});
 });
 
+const markLetter = (elem) => {
+	switch (marking) {
+		case "absent":
+			elem.classList.remove("present", "correct");
+			elem.classList.toggle("absent");
+			break;
+		case "present":
+			elem.classList.remove("absent", "correct");
+			elem.classList.toggle("present");
+			break;
+		case "correct":
+			elem.classList.remove("present", "absent");
+			elem.classList.toggle("correct");
+			break;
+		default:
+			elem.classList.remove("present", "correct", "absent");
+	}
+}
+
+const markKeyboardLetter = (letter) => {
+	const keyBoardLetter = document.querySelectorAll(`.keyboard-button[data-key=${letter}]`)[0];	
+	//Do not mark if any letters are already marked
+	//If any letters are correct, mark correct etc..
+	if (document.querySelectorAll(`.correct[data-tile=${letter}]`).length > 0) {
+		keyBoardLetter.classList.remove("present", "absent");
+		keyBoardLetter.classList.add("correct");
+	} 
+	else if (document.querySelectorAll(`.present[data-tile=${letter}]`).length > 0) {
+		keyBoardLetter.classList.remove("absent", "correct");
+		keyBoardLetter.classList.add("present");
+	}
+	else if (document.querySelectorAll(`.absent[data-tile=${letter}]`).length > 0) {
+		keyBoardLetter.classList.remove("present", "correct");
+		keyBoardLetter.classList.add("absent");
+	} 
+	else if (!!keyBoardLetter) {
+		markLetter(keyBoardLetter)
+	}
+}
+
 const init = async () => {
 	drawGrid();
 	reset();
@@ -242,32 +283,9 @@ const init = async () => {
 	letters.forEach((element) => {
 		element.addEventListener("click", (e) => {
 			const isLetterComplete = [...e.target.classList].some(className => className.startsWith("score"));
-			if (isLetterComplete && !!e.target.innerText) {
-				const letterToMark = e.target.innerText.toLowerCase();
-				const keyBoardLetter = document.querySelectorAll(`.keyboard-button[data-key=${letterToMark}]`)[0];
-				switch (marking) {
-					case "absent":
-						e.target.classList.remove("present", "correct");
-						e.target.classList.toggle("absent");
-						keyBoardLetter.classList.remove("present", "correct");
-						keyBoardLetter.classList.toggle("absent");
-						break;
-					case "present":
-						e.target.classList.remove("absent", "correct");
-						e.target.classList.toggle("present");
-						keyBoardLetter.classList.remove("absent", "correct");
-						keyBoardLetter.classList.toggle("present");
-						break;
-					case "correct":
-						e.target.classList.remove("present", "absent");
-						e.target.classList.toggle("correct");
-						keyBoardLetter.classList.remove("present", "absent");
-						keyBoardLetter.classList.toggle("correct");
-						break;
-					default:
-						keyBoardLetter.classList.remove("present", "correct", "absent");
-						e.target.classList.remove("present", "correct", "absent");
-				}
+			if (isLetterComplete && !!e.target.innerText) {				
+				markLetter(e.target);
+				markKeyboardLetter(e.target.innerText.toLowerCase());
 			}
 		});
 	});
