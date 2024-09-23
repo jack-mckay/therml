@@ -291,4 +291,8 @@ const init = async () => {
 	});
 };
 
+document.getElementById("reset").addEventListener("click", () => {
+	init();
+});
+
 init();
