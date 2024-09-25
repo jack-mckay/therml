@@ -60,6 +60,8 @@ export class Game {
     deleteLetter() {
         this.currentGuess = this.currentGuess.length <= 1 ? "" : this.currentGuess.slice(0, -1);
         this.letters[this.currentRow * this.wordLength + this.currentGuess.length].innerText = "";
+        this.letters[this.currentRow * this.wordLength + this.currentGuess.length].classList = ["tile"];
+        delete this.letters[this.currentRow * this.wordLength + this.currentGuess.length].dataset.tile;
     };
     
     resetInvalid() {

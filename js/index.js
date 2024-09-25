@@ -9,7 +9,8 @@ const markingButtons = document.querySelectorAll('input[name="marking"]');
 let marking = 'none';
 
 boardElem.addEventListener("click", (e) => {
-	if (!!e.target.dataset.tile) {				
+	const isLetterComplete = [...e.target.classList].some(className => className.startsWith("score"));
+	if (isLetterComplete) {
 		markLetter(e.target, marking);
 		markKeyboardLetter(e.target.dataset.tile, marking);
 	}
