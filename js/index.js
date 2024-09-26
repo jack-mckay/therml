@@ -28,6 +28,8 @@ document.getElementById("reset").addEventListener("click", () => {
 });
 
 const init = async () => {
+	document.querySelectorAll(".keyboard-button").forEach(key => key.classList = ["keyboard-button"]);
+
 	const urlParams = new URLSearchParams(window.location.search);
 	const gameType = urlParams.has("free") ? 'free' : 'daily';
 

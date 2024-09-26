@@ -22,10 +22,10 @@ export class Word {
 
 		this.word = wordRes.toUpperCase();
 		this.wordArr = this.word.split("");
-		if (!!definition) {
+		if (!!definition[0]) {
 			const firstDef = definition[0];
-			this.definition = firstDef?.meanings[0].definitions[0].definition;
-			this.phonetic = firstDef?.phonetic;
+			this.definition = !!firstDef?.meanings[0]?.definitions[0]?.definition ? firstDef?.meanings[0]?.definitions[0]?.definition : "";
+			this.phonetic = !!firstDef?.phonetic ? firstDef?.phonetic : "";
 		}
 	}
 }
